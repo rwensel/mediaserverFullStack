@@ -19,12 +19,13 @@
                                                       v
                                                   ||present||
  
- This was made for using with Synology 1520+ NAS. You will need to SSLH into the box in order to install 
- containers this way by using docker-compose. The default docker application for the NAS does not allow near 
- as much configuration alone if you want this to fully work with static IP addresses and  ports. If set up correct 
- all the services should be accessible from your NAS IP address and using the port for each service. This can also 
- be run using a swarm, tested and no issues. This will create a brigded connection with your NAS while still allowing 
- communication betweeen inside and outside traffic without placing it directly onto the host network.
+ This was made for using with Synology 1520+ NAS. You will need to SSH into the box in order to install 
+ the docker containers by using docker-compose. The default docker application for the NAS does not allow near 
+ as much configuration alone if you want this to fully work with static IP addresses and  ports which is why i wrote up
+ my own configuration file. If set up correct all the services should be accessible from your NAS IP address and using 
+ the port for each service. This can also be run using a swarm, tested and no issues. This will create a brigded connection 
+ with your NAS while still allowing communication betweeen inside and outside traffic without placing it directly onto the 
+ host network.
  
  Things you do need in order to actually benifit from using this is, a USENET account(s), membership to some indexers, 
  space to store the data, and some know-how-to when it comes to networking, VM/Containers, linux shell, USENET, web 
