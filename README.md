@@ -38,24 +38,24 @@
  
  
  
-                                                       /volume1/docker/lidarr/config
-                                                       /volume1/docker/nzbget/config
-                                                       /volume1/docker/plex/config
-                                                       /volume1/docker/prowlarr
-                                                       /volume1/docker/radarr/config
-                                                       /volume1/docker/sonarr/config
-                                                       /volume1/downloads
-                                                       /volume1/logs/lidarr
-                                                       /volume1/logs/nzbget
-                                                       /volume1/logs/plex
-                                                       /volume1/logs/prowlarr
-                                                       /volume1/logs/radarr
-                                                       /volume1/logs/sonarr
-                                                       /volume1/music
-                                                       /volume1/photo
-                                                       /volume1/photo
-                                                       /volume1/transfers
-                                                       /volume1/video/films
-                                                       /volume1/video/tv
+                                    /volume1/docker/lidarr/config
+                                    /volume1/docker/nzbget/config
+                                    /volume1/docker/plex/config
+                                    /volume1/docker/prowlarr
+                                    /volume1/docker/radarr/config
+                                    /volume1/docker/sonarr/config
+                                    /volume1/downloads
+                                    /volume1/logs/lidarr
+                                    /volume1/logs/nzbget
+                                    /volume1/logs/plex
+                                    /volume1/logs/prowlarr
+                                    /volume1/logs/radarr
+                                    /volume1/logs/sonarr
+                                    /volume1/music
+                                    /volume1/photo
+                                    /volume1/photo
+                                    /volume1/transfers
+                                    /volume1/video/films
+                                    /volume1/video/tv
  
-                              To execute this run sudo docker-compose up -d in the root dir of the docker-compose.yml.
+            To execute this run sudo docker-compose up -d in the root dir of the docker-compose.yml.
