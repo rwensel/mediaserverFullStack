@@ -1,23 +1,23 @@
-                                                   # mediaserverFullStack
+                                           # mediaserverFullStack
 
-                            Rich W. 06/29/2022 Docker-Compose YAML configuration file to create 
-                                          a fully automated mediaserver stack.
+                    Rich W. 06/29/2022 Docker-Compose YAML configuration file to create 
+                                  a fully automated mediaserver stack.
  
-                                                           ||schedule||
-                                                                v
-                                                            ||monitor||
-                                                                v
-                                                            ||search||
-                                                                v
-                                                            ||fetch||
-                                                                v
-                                                            ||extract||
-                                                                v
-                                                            ||metadata||
-                                                                v
-                                                          ||categorize||
-                                                                v
-                                                            ||present||
+                                                 ||schedule||
+                                                      v
+                                                  ||monitor||
+                                                      v
+                                                  ||search||
+                                                      v
+                                                  ||fetch||
+                                                      v
+                                                  ||extract||
+                                                      v
+                                                  ||metadata||
+                                                      v
+                                                ||categorize||
+                                                      v
+                                                  ||present||
  
  This was made for using with Synology 1520+ NAS. You will need to SSLH into the box in order to install 
  containers this way by using docker-compose. The default docker application for the NAS does not allow near 
