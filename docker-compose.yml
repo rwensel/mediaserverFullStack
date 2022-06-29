@@ -57,7 +57,6 @@ services:
             - /volume1/video/films:/movies
             - /volume1/video/tv:/series
             - /volume1/music:/songs
-
         ports:
             - "6789:6789"
         networks:
@@ -151,7 +150,7 @@ services:
           mediastack:
             ipv4_address: 172.15.0.7
         restart: unless-stopped
-
+        
 networks:
   mediastack:
     driver: bridge
