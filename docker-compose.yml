@@ -1,161 +1,136 @@
-#                      Rich W. 06/29/2022 Docker-Compose YAML configuration file to create a fully automated mediaserver stack.
-#                                                       /volume1/docker/lidarr/config
-#                                                       /volume1/docker/nzbget/config
-#                                                       /volume1/docker/plex/config
-#                                                       /volume1/docker/prowlarr
-#                                                       /volume1/docker/radarr/config
-#                                                       /volume1/docker/sonarr/config
-#                                                       /volume1/downloads
-#                                                       /volume1/logs/lidarr
-#                                                       /volume1/logs/nzbget
-#                                                       /volume1/logs/plex
-#                                                       /volume1/logs/prowlarr
-#                                                       /volume1/logs/radarr
-#                                                       /volume1/logs/sonarr
-#                                                       /volume1/music
-#                                                       /volume1/photo
-#                                                       /volume1/photo
-#                                                       /volume1/transfers
-#                                                       /volume1/video/films
-#                                                       /volume1/video/tv
-# 
-#                              To execute this run sudo docker-compose up -d in the root dir of the docker-compose.yml.
-version: "3.7"
+version: "2.2"
 services:
-    prowlarr:
-        image: linuxserver/prowlarr:nightly
-        container_name: prowlarr
-        environment:
-            - PUID=1024
-            - PGID=101
-            - TZ=GB
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /volume1/docker/prowlarr:/config
-            - /volume1/logs/prowlarr:/logs
-            - /volume1/transfers:/prowlarr
-        ports:
-            - "9696:9696"
-        networks:
-          mediastack:
-            ipv4_address: 172.15.0.2
-        restart: unless-stopped
+  prowlarr:
+    image: linuxserver/prowlarr:nightly
+    container_name: prowlarr
+    environment:
+      - PUID=1024
+      - PGID=101
+      - TZ=GB
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume2/shares/linux:/prowlarr
+      - /volume3/servers/config/prowlarr:/config
+      - /volume3/servers/logs/prowlarr:/logs
 
-    nzbget:
-        image: linuxserver/nzbget:latest
-        container_name: nzbget
-        environment:
-            - PUID=1024
-            - PGID=101
-            - TZ=GB
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /volume1/docker/nzbget/config:/config
-            - /volume1/logs/nzbget:/logs
-            - /volume1/downloads:/downloads
-            - /volume1/photo:/photo
-            - /volume1/video/films:/movies
-            - /volume1/video/tv:/series
-            - /volume1/music:/songs
-        ports:
-            - "6789:6789"
-        networks:
-          mediastack:
-            ipv4_address: 172.15.0.3
-        restart: unless-stopped
+    ports:
+      - 9696:9696
+    networks:
+      default:
+        ipv4_address: 182.30.0.2
+    restart: unless-stopped
 
-    sonarr:
-        image: linuxserver/sonarr:latest
-        container_name: sonarr
-        environment:
-            - PUID=1024
-            - PGID=101
-            - TZ=GB
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /volume1/docker/sonarr/config:/config
-            - /volume1/logs/sonarr:/logs
-            - /volume1/video/tv:/tv
-        ports:
-            - "8989:8989"
-        networks:
-          mediastack:
-            ipv4_address: 172.15.0.4
-        restart: unless-stopped
+  nzbget:
+    image: linuxserver/nzbget:latest
+    container_name: nzbget
+    environment:
+      - PUID=1024
+      - PGID=101
+      - TZ=GB
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume3/servers/config/nzbget:/config
+      - /volume2/shares/tmp/nzbget:/tmp
+      - /volume1/media:/media
+      - /volume3/servers/logs/nzbget:/logs
+    ports:
+      - 6789:6789
+    networks:
+      default:
+        ipv4_address: 182.30.0.3
+    restart: unless-stopped
 
-    radarr:
-        image: linuxserver/radarr:nightly
-        container_name: radarr
-        environment:
-            - PUID=1024
-            - PGID=101
-            - TZ=GB
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /volume1/docker/radarr/config:/config
-            - /volume1/logs/radarr:/logs
-            - /volume1/video/films:/movies
-        ports:
-            - "7878:7878"
-        networks:
-          mediastack:
-            ipv4_address: 172.15.0.5
-        restart: unless-stopped
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1024
+      - PGID=101
+      - TZ=GB
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume1/media/sonarr/series:/series
+      - /volume1/media/sonarr:/sonarr
+      - /volume3/servers/config/sonarr:/config
+      - /volume3/servers/logs/sonarr:/logs
+    ports:
+      - 8989:8989
+    networks:
+      default:
+        ipv4_address: 182.30.0.4
+    restart: unless-stopped
 
-    lidarr:
-        image: linuxserver/lidarr:latest
-        container_name: lidarr
-        environment:
-            - PUID=1024
-            - PGID=101
-            - TZ=GB
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /volume1/docker/lidarr/config:/config
-            - /volume1/logs/lidarr:/logs
-            - /volume1/music:/music
-        ports:
-            - "8686:8686"
-        networks:
-          mediastack:
-            ipv4_address: 172.15.0.6
-        restart: unless-stopped
+  radarr:
+    image: linuxserver/radarr:nightly
+    container_name: radarr
+    environment:
+      - PUID=1024
+      - PGID=101
+      - TZ=GB
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume1/media/radarr/movies:/movies
+      - /volume1/media/radarr:/radarr
+      - /volume3/servers/config/radarr:/config
+      - /volume3/servers/logs/radarr:/logs
+    ports:
+      - 7878:7878
+    networks:
+      default:
+        ipv4_address: 182.30.0.5
+    restart: unless-stopped
 
-    plex:
-        container_name: plex
-        image: plexinc/pms-docker:latest
-        privileged: true
-        environment:
-            - PUID=1024
-            - PGID=101
-        volumes:
-            - /etc/localtime:/etc/localtime:ro
-            - /volume1/docker/plex/config:/config
-            - /volume1/logs/plex:/logs
-            - /volume1/video/tv:/tv:rw
-            - /volume1/video/films:/movies:rw
-            - /volume1/music:/music:rw
-            - /volume1/photo:/photo:rw
-        ports:
-            - 32400:32400/tcp
-            - 3005:3005/tcp
-            - 8324:8324/tcp
-            - 32469:32469/tcp
-            - 1901:1901/udp
-            - 32410:32410/udp
-            - 32412:32412/udp
-            - 32413:32413/udp
-            - 32414:32414/udp
-        networks:
-          mediastack:
-            ipv4_address: 172.15.0.7
-        restart: unless-stopped
-        
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1024
+      - PGID=101
+      - TZ=GB
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume1/media/lidarr/music:/music
+      - /volume1/media/lidarr:/lidarr
+      - /volume3/servers/config/lidarr:/config
+      - /volume3/servers/logs/lidarr:/logs
+    ports:
+      - 8686:8686
+    networks:
+      default:
+        ipv4_address: 182.30.0.6
+    restart: unless-stopped
+
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker:latest
+    privileged: true
+    environment:
+      - PUID=1024
+      - PGID=101
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume1/media/radarr/movies:/movies:rw
+      - /volume1/media/lidarr/music:/music:rw
+      - /volume1/media/photos:/photos:rw
+      - /volume1/media/sonarr/series:/series:rw
+      - /volume3/servers/config/plex:/config
+      - /volume3/servers/logs/plex:/logs
+    ports:
+      - 32400:32400/tcp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1901:1901/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    networks:
+      default:
+        ipv4_address: 182.30.0.7
+    restart: unless-stopped
+    
 networks:
-  mediastack:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.15.0.0/24
-          gateway: 172.15.0.1
+  default:
+    external: true
+    name: mediaServarr
