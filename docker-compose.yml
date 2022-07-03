@@ -6,7 +6,7 @@ services:
     environment:
       - PUID=1024
       - PGID=101
-      - TZ=GB
+      - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /volume2/shares/linux:/prowlarr
@@ -26,7 +26,7 @@ services:
     environment:
       - PUID=1024
       - PGID=101
-      - TZ=GB
+      - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /volume3/servers/config/nzbget:/config
@@ -46,7 +46,7 @@ services:
     environment:
       - PUID=1024
       - PGID=101
-      - TZ=GB
+      - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /volume1/media/sonarr/series:/series
@@ -66,7 +66,7 @@ services:
     environment:
       - PUID=1024
       - PGID=101
-      - TZ=GB
+      - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /volume1/media/radarr/movies:/movies
@@ -86,7 +86,7 @@ services:
     environment:
       - PUID=1024
       - PGID=101
-      - TZ=GB
+      - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /volume1/media/lidarr/music:/music
@@ -107,6 +107,7 @@ services:
     environment:
       - PUID=1024
       - PGID=101
+      - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /volume1/media/radarr/movies:/movies:rw
