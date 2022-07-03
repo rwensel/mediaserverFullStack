@@ -130,8 +130,12 @@ services:
       default:
         ipv4_address: 182.30.0.7
     restart: unless-stopped
-    
+
 networks:
   default:
-    external: true
-    name: mediaServarr
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.30.0.0/24
+          gateway: 10.30.0.1
