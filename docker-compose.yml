@@ -4,138 +4,146 @@ services:
     image: linuxserver/prowlarr:nightly
     container_name: prowlarr
     environment:
-      - PUID=1024
+      - PUID=1029
       - PGID=101
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume2/shares/linux:/prowlarr
-      - /volume3/servers/config/prowlarr:/config
-      - /volume3/servers/logs/prowlarr:/logs
-
+      - /volume3/servers/prowlarr/config:/config
     ports:
       - 9696:9696
     networks:
       default:
-        ipv4_address: 182.30.0.2
     restart: unless-stopped
 
   nzbget:
     image: linuxserver/nzbget:latest
     container_name: nzbget
     environment:
-      - PUID=1024
+      - PUID=1029
       - PGID=101
       - TZ=US
+      - NZBGET_USER=one_love
+      - NZBGET_PASS=edf3zF46!ds09Z
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/config/nzbget:/config
-      - /volume2/shares/tmp/nzbget:/tmp
-      - /volume1/media:/media
-      - /volume3/servers/logs/nzbget:/logs
+      - /volume3/servers/nzbget/config:/config
+      - /volume1/storage/downloads/usenet:/storage/downloads/usenet
     ports:
       - 6789:6789
     networks:
       default:
-        ipv4_address: 182.30.0.3
     restart: unless-stopped
 
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=1024
+      - PUID=1029
       - PGID=101
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume1/media/sonarr/series:/series
-      - /volume1/media/sonarr:/sonarr
-      - /volume3/servers/config/sonarr:/config
-      - /volume3/servers/logs/sonarr:/logs
+      - /volume3/servers/sonarr/config:/config
+      - /volume1/storage/media/series:/storage/series
+      - /volume1/storage/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
     ports:
       - 8989:8989
     networks:
       default:
-        ipv4_address: 182.30.0.4
     restart: unless-stopped
 
   radarr:
     image: linuxserver/radarr:nightly
     container_name: radarr
     environment:
-      - PUID=1024
+      - PUID=1029
       - PGID=101
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume1/media/radarr/movies:/movies
-      - /volume1/media/radarr:/radarr
-      - /volume3/servers/config/radarr:/config
-      - /volume3/servers/logs/radarr:/logs
+      - /volume3/servers/radarr/config:/config
+      - /volume1/storage/media/movies:/storage/movies
+      - /volume1/storage/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
     ports:
       - 7878:7878
     networks:
       default:
-        ipv4_address: 182.30.0.5
     restart: unless-stopped
 
   lidarr:
     image: linuxserver/lidarr:latest
     container_name: lidarr
     environment:
-      - PUID=1024
+      - PUID=1029
       - PGID=101
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume1/media/lidarr/music:/music
-      - /volume1/media/lidarr:/lidarr
-      - /volume3/servers/config/lidarr:/config
-      - /volume3/servers/logs/lidarr:/logs
+      - /volume3/servers/lidarr/config:/config
+      - /volume1/storage/media/music:/storage/music
+      - /volume1/storage/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
     ports:
       - 8686:8686
     networks:
       default:
-        ipv4_address: 182.30.0.6
     restart: unless-stopped
 
   plex:
     container_name: plex
-    image: plexinc/pms-docker:latest
+    image: linuxserver/plex:latest
     privileged: true
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/dri/renderD128:/dev/dri/renderD128
     environment:
-      - PUID=1024
+      - PUID=1029
       - PGID=101
       - TZ=US
+      - PLEX_CLAIM=claim-uszg8kpAwMksRS5ttBZf
+      - VERSION=latest
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume1/media/radarr/movies:/movies:rw
-      - /volume1/media/lidarr/music:/music:rw
-      - /volume1/media/photos:/photos:rw
-      - /volume1/media/sonarr/series:/series:rw
-      - /volume3/servers/config/plex:/config
-      - /volume3/servers/logs/plex:/logs
+      - /volume3/servers/plex/config:/config
+      - /volume1/storage/media/series:/storage/media/series
+      - /volume1/storage/media/movies:/storage/media/movies
+      - /volume1/storage/media/music:/storage/media/music
     ports:
-      - 32400:32400/tcp
-      - 3005:3005/tcp
-      - 8324:8324/tcp
-      - 32469:32469/tcp
-      - 1901:1901/udp
+      - 32400:32400
+      - 1901:1900/udp
+      - 3005:3005
+      - 5252:5353/udp
+      - 8324:8324
       - 32410:32410/udp
       - 32412:32412/udp
       - 32413:32413/udp
       - 32414:32414/udp
+      - 32469:32469
     networks:
       default:
-        ipv4_address: 182.30.0.7
+        ipv4_address: 192.168.2.250
+    restart: unless-stopped
+   
+  ombi:
+    image: linuxserver/ombi:4.21.0-development
+    container_name: ombi
+    environment:
+      - PUID=1029
+      - PGID=101
+      - TZ=US
+      - BASE_URL=/ombi
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /volume3/servers/ombi/config:/config
+    ports:
+      - 3579:3579
+    networks:
+      default:
+        ipv4_address: 192.168.2.251
     restart: unless-stopped
 
 networks:
   default:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.30.0.0/24
-          gateway: 10.30.0.1
+    external: true
+    name: backend
+ 
