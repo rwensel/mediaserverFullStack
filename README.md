@@ -39,6 +39,24 @@
                  to configure the front end of Prowlarr, Sonarr, Radarr, Lidarr, NZBGet, Ombi and 
                  Plex server in regards to folder/path mapping.
                  
+                    /<your storage volume>/servers/lidarr/config:/config
+                    /<your storage volume>/servers/nzbget/config:/config
+                    /<your storage volume>/servers/ombi/config:/config
+                    /<your storage volume>/servers/plex/config:/config
+                    /<your storage volume>/servers/prowlarr/config:/config
+                    /<your storage volume>/servers/radarr/config:/config
+                    /<your storage volume>/servers/sonarr/config:/config
+                    /<your storage volume>/storage/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
+                    /<your storage volume>/storage/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
+                    /<your storage volume>/storage/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
+                    /<your storage volume>/storage/downloads/usenet:/storage/downloads/usenet
+                    /<your storage volume>/storage/media/movies:/storage/media/movies
+                    /<your storage volume>/storage/media/movies:/storage/movies
+                    /<your storage volume>/storage/media/music:/storage/media/music
+                    /<your storage volume>/storage/media/music:/storage/music
+                    /<your storage volume>/storage/media/series:/storage/media/series
+                    /<your storage volume>/storage/media/series:/storage/series
+                 
                  You will need to create the following folders in the same hierarchy if you 
                  want this to work out of the box. This can also be acheived on a windows box. 
                  To initiate the plex server front end you need to add /web after your port 
@@ -82,27 +100,8 @@
                  to enter your credentials for sudo everytime you can type: sudo -i when 
                  you log into the ssh box and enter your credentials. This will give you root 
                  access to the box and you will not need to run using sudo.
- 
-                    /<your storage volume>/servers/lidarr/config:/config
-                    /<your storage volume>/servers/nzbget/config:/config
-                    /<your storage volume>/servers/ombi/config:/config
-                    /<your storage volume>/servers/plex/config:/config
-                    /<your storage volume>/servers/prowlarr/config:/config
-                    /<your storage volume>/servers/radarr/config:/config
-                    /<your storage volume>/servers/sonarr/config:/config
-                    /<your storage volume>/storage/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
-                    /<your storage volume>/storage/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
-                    /<your storage volume>/storage/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
-                    /<your storage volume>/storage/downloads/usenet:/storage/downloads/usenet
-                    /<your storage volume>/storage/media/movies:/storage/media/movies
-                    /<your storage volume>/storage/media/movies:/storage/movies
-                    /<your storage volume>/storage/media/music:/storage/media/music
-                    /<your storage volume>/storage/media/music:/storage/music
-                    /<your storage volume>/storage/media/series:/storage/media/series
-                    /<your storage volume>/storage/media/series:/storage/series
- 
 
-   
+
 ![Screenshot 2022-08-09 142050](https://user-images.githubusercontent.com/46492607/183733335-73018ccc-a9b5-44d2-9fbb-279caa096210.png)
 ![Screenshot 2022-08-09 142120](https://user-images.githubusercontent.com/46492607/183733362-011051a6-9564-41a1-80ed-997232060803.png)
 ![Screenshot 2022-08-09 142156](https://user-images.githubusercontent.com/46492607/183733373-04d47946-343b-462e-b0c9-135a1feb185f.png)
