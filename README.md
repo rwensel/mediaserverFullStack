@@ -36,7 +36,7 @@
                  account(s), membership to some indexers, space to store the data, and some 
                  know-how-to when it comes to networking, VM/Containers, linux shell, USENET, 
                  web configuration, patience and trouble shooting skills. You will also need 
-                 to configure the front end of Prowlarr, Sonarr, Radarr, Lidarr, NZBGet and 
+                 to configure the front end of Prowlarr, Sonarr, Radarr, Lidarr, NZBGet, Ombi and 
                  Plex server in regards to folder/path mapping.
                  
                  You will need to create the following folders in the same hierarchy if you 
