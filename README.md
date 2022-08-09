@@ -17,6 +17,8 @@
                                                       v
                                                 ||categorize||
                                                       v
+                                                  ||request||
+                                                      v
                                                   ||present||
  
  This was made for using with Synology 1520+ NAS. You will need to SSH into the box in order to install 
@@ -39,25 +41,23 @@
  
  
  
-                                    /volume1/docker/lidarr/config
-                                    /volume1/docker/nzbget/config
-                                    /volume1/docker/plex/config
-                                    /volume1/docker/prowlarr
-                                    /volume1/docker/radarr/config
-                                    /volume1/docker/sonarr/config
-                                    /volume1/downloads
-                                    /volume1/logs/lidarr
-                                    /volume1/logs/nzbget
-                                    /volume1/logs/plex
-                                    /volume1/logs/prowlarr
-                                    /volume1/logs/radarr
-                                    /volume1/logs/sonarr
-                                    /volume1/music
-                                    /volume1/photo
-                                    /volume1/photo
-                                    /volume1/transfers
-                                    /volume1/video/films
-                                    /volume1/video/tv
+                                    /<your storage volume>/servers/lidarr/config:/config
+                                    /<your storage volume>/servers/nzbget/config:/config
+                                    /<your storage volume>/servers/ombi/config:/config
+                                    /<your storage volume>/servers/plex/config:/config
+                                    /<your storage volume>/servers/prowlarr/config:/config
+                                    /<your storage volume>/servers/radarr/config:/config
+                                    /<your storage volume>/servers/sonarr/config:/config
+                                    /<your storage volume>/storage/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
+                                    /<your storage volume>/storage/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
+                                    /<your storage volume>/storage/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
+                                    /<your storage volume>/storage/downloads/usenet:/storage/downloads/usenet
+                                    /<your storage volume>/storage/media/movies:/storage/media/movies
+                                    /<your storage volume>/storage/media/movies:/storage/movies
+                                    /<your storage volume>/storage/media/music:/storage/media/music
+                                    /<your storage volume>/storage/media/music:/storage/music
+                                    /<your storage volume>/storage/media/series:/storage/media/series
+                                    /<your storage volume>/storage/media/series:/storage/series
  
             To execute this run sudo docker-compose up -d in the root dir of the docker-compose.yml
             
