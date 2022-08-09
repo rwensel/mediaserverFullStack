@@ -72,7 +72,6 @@
                  fall behind on service updates very quickly. Staying up-to-date with these services 
                  are critical and enchancements so it is something you want to keep up with.
                  
-                 
                  In order to deploy new updates all you will need to do is SSH into your NAS 
                  box: 
                  
@@ -107,9 +106,3 @@
 ![Screenshot 2022-08-09 142156](https://user-images.githubusercontent.com/46492607/183733373-04d47946-343b-462e-b0c9-135a1feb185f.png)
 ![image](https://user-images.githubusercontent.com/46492607/183742594-29718785-89e3-4b14-a4ce-f857010dbfcc.png)
 ![image](https://user-images.githubusercontent.com/46492607/183743285-6ac0b2ec-454a-4f51-b0da-707c21fbbaf4.png)
-
-
-         
-            
-            
-
