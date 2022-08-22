@@ -2,10 +2,10 @@ version: "2.2"
 services:
   prowlarr:
     image: linuxserver/prowlarr:nightly
-    container_name: prowlarr
+    container_name: media_prowlarr
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1038
+      - PGID=100
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -18,10 +18,10 @@ services:
 
   nzbget:
     image: linuxserver/nzbget:latest
-    container_name: nzbget
+    container_name: media_nzbget
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1039
+      - PGID=100
       - TZ=US
       - NZBGET_USER=one_love
       - NZBGET_PASS=edf3zF46!ds09Z
@@ -37,10 +37,10 @@ services:
 
   sonarr:
     image: linuxserver/sonarr:latest
-    container_name: sonarr
+    container_name: media_sonarr
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1033
+      - PGID=100
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -55,10 +55,10 @@ services:
 
   radarr:
     image: linuxserver/radarr:nightly
-    container_name: radarr
+    container_name: media_radarr
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1037
+      - PGID=100
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -73,10 +73,10 @@ services:
 
   lidarr:
     image: linuxserver/lidarr:latest
-    container_name: lidarr
+    container_name: media_lidarr
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1035
+      - PGID=100
       - TZ=US
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -90,15 +90,15 @@ services:
     restart: unless-stopped
 
   plex:
-    container_name: plex
+    container_name: media_plex
     image: linuxserver/plex:latest
     privileged: true
     devices:
       - /dev/dri:/dev/dri
       - /dev/dri/renderD128:/dev/dri/renderD128
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1040
+      - PGID=100
       - TZ=US
       - PLEX_CLAIM=claim-uszg8kpAwMksRS5ttBZf
       - VERSION=latest
@@ -119,17 +119,14 @@ services:
       - 32413:32413/udp
       - 32414:32414/udp
       - 32469:32469
-    networks:
-      default:
-        ipv4_address: 192.168.2.250
     restart: unless-stopped
    
   ombi:
     image: linuxserver/ombi:4.21.0-development
-    container_name: ombi
+    container_name: media_ombi
     environment:
-      - PUID=1029
-      - PGID=101
+      - PUID=1041
+      - PGID=100
       - TZ=US
       - BASE_URL=/ombi
     volumes:
@@ -137,9 +134,6 @@ services:
       - /volume3/servers/ombi/config:/config
     ports:
       - 3579:3579
-    networks:
-      default:
-        ipv4_address: 192.168.2.251
     restart: unless-stopped
 
 networks:
