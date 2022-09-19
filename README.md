@@ -113,3 +113,8 @@
                  not picked back up on that project. Todo is to change db from SQL to sqllite db since the data isn't
                  to intenseive for storage. I also plan on inclduing a Redis server for key storage eventually. This is just a
                  daily project/hobby hosting all services including website (https://thewensels.com) from my home on a 24/7 linux box.
+                 
+                 ![image](https://user-images.githubusercontent.com/46492607/191103068-cbeb60a4-05a5-43c7-beda-e651febb91cc.png)
+                 ![image](https://user-images.githubusercontent.com/46492607/191103447-6299a8c7-fe23-4f79-bd70-a5155381552c.png)
+
+
