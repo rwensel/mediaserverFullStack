@@ -107,7 +107,7 @@
                  access to the box and you will not need to run using sudo.
                  
                  Set up a nginx server to forward incoming requests to the appropriate servers. 
-                 Set up steam servers for port 32400 as well to help better serve plex service if needed.
+                 Set up stream servers for port 32400 as well to help better serve plex service if needed.
                  
                  Website was created using Django module. Listener and reddit/graph api bot created by me however I have
                  not picked back up on that project. Todo is to change db from SQL to sqllite db since the data isn't
