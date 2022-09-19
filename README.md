@@ -105,10 +105,6 @@
                  to enter your credentials for sudo everytime you can type: sudo -i when 
                  you log into the ssh box and enter your credentials. This will give you root 
                  access to the box and you will not need to run using sudo.
-
-
-![Screenshot 2022-08-09 142050](https://user-images.githubusercontent.com/46492607/183733335-73018ccc-a9b5-44d2-9fbb-279caa096210.png)
-![Screenshot 2022-08-09 142120](https://user-images.githubusercontent.com/46492607/183733362-011051a6-9564-41a1-80ed-997232060803.png)
-![Screenshot 2022-08-09 142156](https://user-images.githubusercontent.com/46492607/183733373-04d47946-343b-462e-b0c9-135a1feb185f.png)
-![image](https://user-images.githubusercontent.com/46492607/183742594-29718785-89e3-4b14-a4ce-f857010dbfcc.png)
-![image](https://user-images.githubusercontent.com/46492607/183743285-6ac0b2ec-454a-4f51-b0da-707c21fbbaf4.png)
+                 
+                 Set up a nginx server to forward incoming requests to the appropriate servers. 
+                 Set up steam servers for port 32400 as well to help better serve plex service if needed.
