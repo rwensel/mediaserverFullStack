@@ -2,24 +2,30 @@
 
                     Rich W. 06/29/2022 Docker-Compose YAML configuration file to create 
                                   a fully automated mediaserver stack.
- 
-                                                 ||schedule||
+                                              {((( Docker Env )))}
+                                                
+                                             ||manager containers|| (portainer)
                                                       v
-                                                  ||monitor||
+                                                 ||schedule|| =--\
+                                                      v         --\
+                                                  ||monitor||   ---|--- (Sonarr, Radarr, Lidarr)
+                                                        v       --/
+                                                  ||search|| ----/
                                                       v
-                                                  ||search||
+                                                  ||fetch||   --\
+                                                      v       ---|--- (nzbget)
+                                                  ||extract|| --/
                                                       v
-                                                  ||fetch||
+                                                  ||metadata|| --\
+                                                      v         --|--- (plex server)
+                                                ||categorize|| --/
                                                       v
-                                                  ||extract||
+                                                  ||route|| (nginx reverse proxy and pihole DNS/sinkhole)
                                                       v
-                                                  ||metadata||
+                                                 ||request|| (ombi requests, app or web)
                                                       v
-                                                ||categorize||
-                                                      v
-                                                  ||request||
-                                                      v
-                                                  ||present||
+                                                 ||present|| (plex pro front end service}
+                                                  
  
                  This was made for using with Synology 1520+ NAS. You will need to SSH into 
                  the box in order to install the docker containers by using docker-compose. 
