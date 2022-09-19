@@ -1,143 +1,281 @@
-version: "2.2"
+version: "3.7"
 services:
-  prowlarr:
-    image: linuxserver/prowlarr:nightly
-    container_name: media_prowlarr
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    hostname: pi.<obscured>.net
     environment:
-      - PUID=1038
-      - PGID=100
-      - TZ=US
+      WEBPASSWORD: ${WEBPASSWORD}
+      FTLCONF_LOCAL_IPV4: ${FTLCONF_LOCAL_IPV4}
+      IPv6: "false"
+      DNSMASQ_LISTENING: all
+    mac_address: ${MAC_ADDRESS}
+    networks:
+      frontend:
+        ipv4_address: <obscured>
+      backend:
+        ipv4_address: 172.18.0.2
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    labels:
+      flame.name: pihole
+      flame.type: application
+      flame.url: http://<obscured>
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/prowlarr/config:/config
+      - /<obscured>/<obscured>/pihole/etc-pihole:/etc/pihole
+      - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+      - /<obscured>/<obscured>/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
     ports:
-      - 9696:9696
-    networks:
-      default:
-    restart: unless-stopped
-
-  nzbget:
-    image: linuxserver/nzbget:latest
-    container_name: media_nzbget
+      - '80:80'
+      - '443:443'
+      - '53:53/udp'
+      - '53:53/tcp'
+      
+   npm:
+     image: jc21/nginx-proxy-manager:latest
+     container_name: npm
+     hostname: npm
+     environment:
+       SSL_CERT_FILE: ${SSL_CERT_FILE}
+       CURL_CA_BUNDLE: ${CURL_CA_BUNDLE}
+       DISABLE_IPV6: 'true'
+     labels:
+       flame.type: application
+       flame.name: npm
+       flame.url: npm.<obscured>.lan
+     volumes:
+       - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+       - /<obscured>/<obscured>/nginx:/data
+       - /etc/localtime:/etc/localtime:ro
+       - /var/run/docker.sock:/tmp/docker.sock
+     networks:
+       frontend:
+         ipv4_address: <obscured>
+     ports:
+       - '80:80'
+       - '81:81'
+       - '443:443'
+     restart: always
+  
+  flame:
+    image: pawelmalak/flame:latest
+    container_name: flame
+    hostname: flame.<obscured>.net
     environment:
-      - PUID=1039
-      - PGID=100
-      - TZ=US
-      - NZBGET_USER=one_love
-      - NZBGET_PASS=edf3zF46!ds09Z
+      PASSWORD: ${PASSWORD}
+      NODE_ENV: ${NODE_ENV}
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /<obscured>/<obscured>/flame:/app/data
+      - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
       - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/nzbget/config:/config
-      - /volume1/storage/downloads/usenet:/storage/downloads/usenet
     ports:
-      - 6789:6789
+      - '5005:5005'
     networks:
-      default:
-    restart: unless-stopped
-
-  sonarr:
-    image: linuxserver/sonarr:latest
-    container_name: media_sonarr
-    environment:
-      - PUID=1033
-      - PGID=100
-      - TZ=US
+      backend:
+        ipv4_address: 172.18.0.4
+    dns:
+      - 172.18.0.2
+    restart: always
+  
+  website:
+      image: mysite
+      container_name: mysite
+      hostname: mysite.<obscured>.net
+      labels:
+        flame.type: application
+        flame.name: mysite
+        flame.url: mysite.nas.<obscured>.net
+      volumes:
+        - /<obscured>/<obscured>/media/staticfiles:/staticfiles
+        - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+        - /etc/localtime:/etc/localtime:ro
+      networks:
+        backend:
+          ipv4_address: 172.18.0.5
+      dns:
+      - 172.18.0.2
+      ports:
+        - "8005:8005"
+      restart: always
+      
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: "portainer"
+    hostname: port.<obscured>.net
+    entrypoint: /portainer
+    labels:
+      flame.type: application
+      flame.name: portainer
+      flame.url: port.nas.<obscured>.net
     volumes:
+      - /<obscured>/<obscured>/portainer:/data
       - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/sonarr/config:/config
-      - /volume1/storage/media/series:/storage/series
-      - /volume1/storage/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
-    ports:
-      - 8989:8989
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /<obscured>/<obscured>/letsencrypt:/etc/
     networks:
-      default:
-    restart: unless-stopped
-
-  radarr:
-    image: linuxserver/radarr:nightly
-    container_name: media_radarr
-    environment:
-      - PUID=1037
-      - PGID=100
-      - TZ=US
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/radarr/config:/config
-      - /volume1/storage/media/movies:/storage/movies
-      - /volume1/storage/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
+      backend:
+        ipv4_address: 172.18.0.3
+    dns:
+      - 172.18.0.2
     ports:
-      - 7878:7878
-    networks:
-      default:
-    restart: unless-stopped
-
-  lidarr:
-    image: linuxserver/lidarr:latest
-    container_name: media_lidarr
-    environment:
-      - PUID=1035
-      - PGID=100
-      - TZ=US
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/lidarr/config:/config
-      - /volume1/storage/media/music:/storage/music
-      - /volume1/storage/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
-    ports:
-      - 8686:8686
-    networks:
-      default:
-    restart: unless-stopped
-
+      - '8000:8000'
+      - '9000:9000'
+      - '9443:9443'
+    restart: always
+    
   plex:
-    container_name: media_plex
     image: linuxserver/plex:latest
+    container_name: plex
+    hostname: plex.<obscured>.net
     privileged: true
     devices:
       - /dev/dri:/dev/dri
       - /dev/dri/renderD128:/dev/dri/renderD128
+    labels:
+      flame.name: plex
+      flame.type: application
+      flame.url: plex.nas.<obscured>.net
     environment:
-      - PUID=1040
-      - PGID=100
-      - TZ=US
-      - PLEX_CLAIM=claim-uszg8kpAwMksRS5ttBZf
-      - VERSION=latest
+      PLEX_CLAIM: ${PLEX_CLAIM}
+      ADVERTISE_IP: ${ADVERTISE_IP}
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/plex/config:/config
-      - /volume1/storage/media/series:/storage/media/series
-      - /volume1/storage/media/movies:/storage/media/movies
-      - /volume1/storage/media/music:/storage/media/music
+      - /<obscured>/<obscured>/plex:/config
+      - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+      - /<obscured>/<obscured>/media/series:/storage/media/series
+      - /<obscured>/<obscured>/media/movies:/storage/media/movies
+      - /<obscured>/<obscured>/media/music:/storage/media/music
+    networks:
+      backend:
+        ipv4_address: 172.18.0.6
+    dns:
+      - 172.18.0.2
     ports:
       - 32400:32400
-      - 1901:1900/udp
-      - 3005:3005
-      - 5252:5353/udp
-      - 8324:8324
-      - 32410:32410/udp
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
-      - 32469:32469
-    restart: unless-stopped
-   
+
+    restart: always
+  
   ombi:
-    image: linuxserver/ombi:4.21.0-development
-    container_name: media_ombi
+    image: linuxserver/ombi:latest
+    container_name: ombi
+    hostname: ombi.<obscured>.net
     environment:
-      - PUID=1041
-      - PGID=100
-      - TZ=US
-      - BASE_URL=/ombi
+      BASE_URL: /ombi
+    labels:
+      flame.name: ombi
+      flame.type: application
+      flame.url: ombi.nas.<obscured>.net
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /volume3/servers/ombi/config:/config
+      - /<obscured>/<obscured>/ombi:/config
+      - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+    networks:
+      backend:
+        ipv4_address: 172.18.0.7
+    dns:
+      - 172.18.0.2
     ports:
-      - 3579:3579
-    restart: unless-stopped
-
+      - '3579:3579'
+    restart: always
+  
+  nzbget:
+      image: linuxserver/nzbget:latest
+      container_name: nzbget
+      hostname: nzbget.<obscured>.net
+      labels:
+        flame.type: application
+        flame.name: nzbget
+        flame.url: nzbget.nas.<obscured>.net
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /<obscured>/<obscured>/nzbget:/config
+        - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+        - /<obscured>/<obscured>/downloads/usenet:/storage/downloads/usenet
+      networks:
+        backend:
+          ipv4_address: 172.18.0.8
+      dns:
+      - 172.18.0.2
+      ports:
+        - '6789:6789'
+      restart: always
+  
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    hostname: sonarr.<obscured>.net
+    labels:
+      flame.type: application
+      flame.name: sonarr
+      flame.url: sonarr.nas.<obscured>.net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /<obscured>/<obscured>/sonarr:/config
+      - /<obscured>/<obscured>/media/series:/storage/series
+      - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+      - /<obscured>/<obscured>/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
+    networks:
+      backend:
+        ipv4_address: 172.18.0.9
+    dns:
+      - 172.18.0.2
+    ports:
+      - '8989:8989'
+    restart: always
+  
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    hostname: radarr.<obscured>.net
+    labels:
+      flame.type: application
+      flame.name: radarr
+      flame.url: radarr.nas.<obscured>.net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /<obscured>/<obscured>/radarr:/config
+      - /<obscured>/<obscured>/media/movies:/storage/movies
+      - /<obscured>/<obscured>/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
+    networks:
+      backend:
+        ipv4_address: 172.18.0.10
+    dns:
+      - 172.18.0.2
+    ports:
+      - '7878:7878'
+    restart: always
+  
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    hostname: lidarr.<obscured>.net
+    labels:
+      flame.type: application
+      flame.name: lidarr
+      flame.url: lidarr.nas.<obscured>.net
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /<obscured>/<obscured>/lidarr:/config
+      - /<obscured>/<obscured>/media/music:/storage/music
+      - /<obscured>/<obscured>/letsencrypt:/etc/letsencrypt
+      - /<obscured>/<obscured>/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
+    networks:
+      backend:
+        ipv4_address: 172.18.0.11
+    dns:
+      - 172.18.0.2
+    ports:
+      - '8686:8686'
+    restart: always
+    
 networks:
-  default:
-    external: true
-    name: backend
- 
+  frontend:
+    external:
+      name: macvlan-br0
+  backend:
+    external:
+      name: stack
