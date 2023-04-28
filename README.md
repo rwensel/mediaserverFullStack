@@ -1,7 +1,29 @@
                                            # mediaserverFullStack
 
-                    Rich W. 06/29/2022 Docker-Compose YAML configuration file to create 
-                                  a fully automated mediaserver stack.
+This is a Docker Compose file that defines the configuration for running several services and applications within Docker containers. Each service is defined as a separate container, with its own image, configuration, and network settings.
+
+The services include:
+
+1. `pihole`: a DNS server that blocks ads and trackers.
+2. `npm`: an NGINX proxy manager that allows for easy management of virtual hosts and SSL certificates.
+3. `flame`: a container monitoring tool that provides insight into the resource usage of Docker containers.
+4. `website`: a custom application container that serves a website.
+5. `portainer`: a container management platform that provides an easy-to-use web interface for managing Docker containers, images, and networks.
+6. `plex`: a media server that organizes and streams media content such as movies and TV shows.
+7. `ombi`: a request management platform for media servers.
+8. `nzbget`: a Usenet download client.
+9. `sonarr`: a TV show management platform for media servers.
+10. `radarr`: a movie management platform for media servers.
+11. `lidarr`: a music management platform for media servers.
+
+The services are defined with various configuration settings such as the container name, hostname, environment variables, volumes, ports, and networks. Each service is labeled with metadata such as the application name, type, and URL for easy identification.
+
+The networks are defined as `frontend` and `backend` and they are external networks, with names defined in the host system. The `frontend` network is a macvlan network, while the `backend` network is a bridge network. The network settings define the IP address for each container and the DNS server used for resolving domain names.
+
+To use this Docker Compose file, first, ensure that Docker and Docker Compose are installed on the host system. Then, place the file in a directory and run `docker-compose up` command in the same directory. This will start all the services defined in the file. To stop the services, run `docker-compose down` command. 
+
+This Docker Compose file can be used for various use cases such as home media server, local website hosting, and container management. The file can be customized to suit the user's specific needs and can be extended with additional services and containers as required.
+
                                               {((( Docker Env )))}
                                                 
                                              ||manager containers|| (portainer)
