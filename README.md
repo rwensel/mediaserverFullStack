@@ -10,8 +10,8 @@ The services include:
 4. `website`: a custom application container that serves a website.
 5. `portainer`: a container management platform that provides an easy-to-use web interface for managing Docker containers, images, and networks.
 6. `plex`: a media server that organizes and streams media content such as movies and TV shows.
-7. `ombi`: a request management platform for media servers.
-8. `nzbget`: a Usenet download client.
+7. `ombi`: a request management platform for media servers
+8. `nzbget`: a download client.
 9. `sonarr`: a TV show management platform for media servers.
 10. `radarr`: a movie management platform for media servers.
 11. `lidarr`: a music management platform for media servers.
@@ -60,9 +60,9 @@ This Docker Compose file can be used for various use cases such as home media se
                  communication betweeen inside and outside traffic without placing it directly 
                  onto the host network.
                  
-                 Things you do need in order to actually benifit from using this is, a USENET 
+                 Things you do need in order to actually benifit from using this is, a UNET 
                  account(s), membership to some indexers, space to store the data, and some 
-                 know-how-to when it comes to networking, VM/Containers, linux shell, USENET, 
+                 know-how-to when it comes to networking, VM/Containers, linux shell, UNET, 
                  web configuration, patience and trouble shooting skills. You will also need 
                  to configure the front end of Prowlarr, Sonarr, Radarr, Lidarr, NZBGet, Ombi and 
                  Plex server in regards to folder/path mapping.
@@ -74,10 +74,10 @@ This Docker Compose file can be used for various use cases such as home media se
                     /<your storage volume>/servers/prowlarr/config:/config
                     /<your storage volume>/servers/radarr/config:/config
                     /<your storage volume>/servers/sonarr/config:/config
-                    /<your storage volume>/storage/downloads/usenet/complete/movies:/storage/downloads/usenet/complete/movies
-                    /<your storage volume>/storage/downloads/usenet/complete/music:/storage/downloads/usenet/complete/music
-                    /<your storage volume>/storage/downloads/usenet/complete/series:/storage/downloads/usenet/complete/series
-                    /<your storage volume>/storage/downloads/usenet:/storage/downloads/usenet
+                    /<your storage volume>/storage/downloads/unet/complete/movies:/storage/downloads/unet/complete/movies
+                    /<your storage volume>/storage/downloads/unet/complete/music:/storage/downloads/unet/complete/music
+                    /<your storage volume>/storage/downloads/unet/complete/series:/storage/downloads/unet/complete/series
+                    /<your storage volume>/storage/downloads/unet:/storage/downloads/unet
                     /<your storage volume>/storage/media/movies:/storage/media/movies
                     /<your storage volume>/storage/media/movies:/storage/movies
                     /<your storage volume>/storage/media/music:/storage/media/music
